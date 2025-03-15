@@ -14,7 +14,7 @@ unified cross-chain blockchain data through a simple, Pythonic interface.
 ## Installation
 
 ```bash
-pip install heimdahl-client
+git clone git@github.com:heimdahl-xyz/heimdahl-py.git
 ```
 
 ## Quick Start
