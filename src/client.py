@@ -40,10 +40,28 @@ class HeimdahlClient:
         url = f"{self.base_url}/{endpoint}"
         response = self.session.get(url, params=params)
         response.raise_for_status()
-#         print("request ", endpoint)
         resp = response.json()
-#         print("response ", resp)
         return resp
+
+    def get_chains(self) -> List[Dict]:
+        """
+                Get list of supported chains.
+
+                Returns:
+                    List of supported chains
+        """
+        endpoint = "chains"
+        return self._make_request(endpoint, {})
+
+    def get_contracts(self) -> List[Dict]:
+        """
+                Get list of regsitered ethereum evm compatible contracts.
+
+                Returns:
+                    List of supported contracts
+        """
+        endpoint = "contracts"
+        return self._make_request(endpoint, {})
 
     def get_swaps(self,
                   chain: str = "all",
