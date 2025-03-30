@@ -40,7 +40,10 @@ class HeimdahlClient:
         url = f"{self.base_url}/{endpoint}"
         response = self.session.get(url, params=params)
         response.raise_for_status()
-        return response.json()
+#         print("request ", endpoint)
+        resp = response.json()
+#         print("response ", resp)
+        return resp
 
     def get_swaps(self,
                   chain: str = "all",
@@ -157,18 +160,17 @@ class HeimdahlClient:
         """
         Get raw blockchain events for a specific token and event type.
 
-        Pattern: /v1/{chain}/events/{token_address}/{event_name}
+        Pattern: /v1/events/list/{pattern}
 
         Args:
-            chain: Blockchain name (ethereum, arbitrum, solana, etc.)
-            token_address: Contract address
-            event_name: Event name (e.g., "Transfer")
+            pattern: Search pattern of following format:
+            chain.network.contract_address.event_name (eg. arbitrum.mainnet.0xaf88d065e77c8cC2239327C5EDb3A432268e5831.Transfer)
 
         Returns:
             List of event dictionaries
         """
         # Make the request
-        endpoint = f"{chain}/events/{token_address}/{event_name}"
+        endpoint = f"events/list/{chain}.mainnet.{token_address}.{event_name}"
 
         return self._make_request(endpoint)
 
@@ -270,64 +272,3 @@ class HeimdahlClient:
         """Close the session."""
         self.session.close()
 
-
-# Example usage
-if __name__ == "__main__":
-    # Initialize the client with your API key
-    client = HeimdahlClient(api_key="pk_dc07ea43afeb807362e9b67201e6d07054f7292edb2c4bad")
-
-    try:
-        # Example 1: Get USDC/WETH swaps on Ethereum
-        swaps = client.get_swaps(
-            chain="ethereum",
-            token1="USDC",
-            token2="WETH",
-            size_bucket="all",
-            page_size=5
-        )
-
-        print(f"Found {len(swaps)} USDC/WETH swaps on Ethereum")
-        if swaps:
-            print("\nFirst swap:")
-            for key, value in swaps[0].items():
-                print(f"{key}: {value}")
-
-        # Example 2: Get transfers for a specific address
-        transfers = client.get_transfers(
-            chain="arbitrum",
-            token="USDC",
-            from_address="0x51C72848c68a965f66FA7a88855F9f7784502a7F",
-            page_size=5
-        )
-
-        print(f"\nFound {len(transfers)} USDC transfers from the address on Arbitrum")
-        if transfers:
-            print("\nFirst transfer:")
-            for key, value in transfers[0].items():
-                print(f"{key}: {value}")
-
-            # Calculate total amount
-            if "decimals" in transfers[0]:
-                decimals = transfers[0]["decimals"]
-                total = sum(transfer["amount"] for transfer in transfers) / (10 ** decimals)
-                print(f"\nTotal amount: {total:.2f} USDC")
-            else:
-                total = sum(transfer["amount"] for transfer in transfers)
-                print(f"\nTotal raw amount: {total}")
-
-        # Example 3: Get Transfer events for a token
-        events = client.get_events(
-            chain="arbitrum",
-            token_address="0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
-            event_name="Transfer"
-        )
-
-        print(f"\nFound {len(events)} Transfer events for the token on Arbitrum")
-        print(events["events"])
-        if events:
-            print("\nFirst event:")
-            print(events["events"][0])
-
-    finally:
-        # Close the client
-        client.close()
