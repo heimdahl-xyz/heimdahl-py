@@ -1,9 +1,15 @@
-# Heimdahl Python SDK
+# What is Heimdahl platform?
+
+Heimdahl is a unified blockchain intelligence platform that provides seamless access to real-time and historical data
+across multiple chains through an intuitive pattern-based query system.RetryClaude can make mistakes. Please
+double-check responses.
+
+## Heimdahl Python SDK
 
 A lightweight Python client for accessing Heimdahl's blockchain data platform. This SDK provides convenient access to
 unified cross-chain blockchain data through a simple, Pythonic interface.
 
-## Features
+### Features
 
 - Access unified blockchain data across Ethereum, Arbitrum, Solana, and more
 - Retrieve token transfers and swaps with consistent data structures
@@ -11,13 +17,13 @@ unified cross-chain blockchain data through a simple, Pythonic interface.
 - Simple pattern-based endpoints for intuitive filtering
 - Clean Pythonic interface with standard data structures
 
-## Installation
+### Installation
 
 ```bash
 git clone git@github.com:heimdahl-xyz/heimdahl-py.git
 ```
 
-## Quick Start
+### Quick Start
 
 ```python
 from heimdahl import HeimdahlClient
@@ -44,9 +50,9 @@ print(f"Average price: 1 USDC = {avg_price:.8f} WETH")
 client.close()
 ```
 
-## Core API Methods
+### Core API Methods
 
-### Swaps
+#### Swaps
 
 Get cross-chain swap data with consistent structure:
 
@@ -76,7 +82,7 @@ swaps = client.search_swaps_by_token_pair(
 )
 ```
 
-### Transfers
+#### Transfers
 
 Get token transfer data across chains:
 
@@ -106,7 +112,7 @@ transfers = client.get_transfers(
 )
 ```
 
-### Events
+#### Events
 
 Get raw blockchain events:
 
@@ -119,7 +125,7 @@ events = client.get_events(
 )
 ```
 
-## Pagination
+### Pagination
 
 Methods support pagination for retrieving large datasets:
 
@@ -149,11 +155,11 @@ all_transfers = client.get_token_transfers(
 )
 ```
 
-## Data Format
+#### Data Format
 
 All methods return Python lists of dictionaries with consistent keys:
 
-### Swap Data Example
+#### Swap Data Example
 
 ```python
 {
@@ -175,7 +181,7 @@ All methods return Python lists of dictionaries with consistent keys:
 }
 ```
 
-### Transfer Data Example
+#### Transfer Data Example
 
 ```python
 {
@@ -193,7 +199,7 @@ All methods return Python lists of dictionaries with consistent keys:
 }
 ```
 
-## Error Handling
+### Error Handling
 
 The SDK uses standard Python exceptions. API errors will raise a `requests.exceptions.HTTPError` with the appropriate
 status code and message.
@@ -205,11 +211,11 @@ except requests.exceptions.HTTPError as e:
     print(f"API error: {e}")
 ```
 
-## Requirements
+### Requirements
 
 - Python 3.6+
 - requests
 
-## License
+### License
 
 MIT
