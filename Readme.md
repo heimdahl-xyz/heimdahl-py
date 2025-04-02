@@ -21,9 +21,16 @@ unified cross-chain blockchain data through a simple, Pythonic interface.
 
 ### Installation
 
+#### Prerequisites
+
+* python 3
+* git
+* bash/sh
+
 ```bash
 git clone git@github.com:heimdahl-xyz/heimdahl-py.git
 ```
+
 
 ### Quick Start
 
