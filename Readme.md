@@ -1,7 +1,7 @@
 # What is Heimdahl platform?
 
 Heimdahl is a unified blockchain intelligence platform that provides seamless access to real-time and historical data
-across multiple chains through an intuitive pattern-based query system.RetryClaude can make mistakes. 
+across multiple chains through an intuitive pattern-based query system.
 
 More about it: https://heimdahl.gitbook.io/heimdahl
 Website: https://heimdahl.xyz/
