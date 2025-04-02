@@ -28,28 +28,39 @@ git clone git@github.com:heimdahl-xyz/heimdahl-py.git
 ### Quick Start
 
 ```python
-from heimdahl import HeimdahlClient
+import sys
+import os
 
-# Initialize the client with your API key
-client = HeimdahlClient(api_key="your_api_key_here")
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
-# Get USDC/WETH swaps on Ethereum
-swaps = client.get_swaps(
-    chain="ethereum",
-    token1="USDC",
-    token2="WETH",
-    size_bucket="all",
-    page_size=10
-)
+from client import Index
 
-print(f"Found {len(swaps)} USDC/WETH swaps")
 
-# Calculate average price
-avg_price = client.calculate_price(swaps)
-print(f"Average price: 1 USDC = {avg_price:.8f} WETH")
+# Example usage
+if __name__ == "__main__":
+    # Initialize the client with your API key
+    client = Index(api_key="pk_dc07ea43afeb807362e9b67201e6d07054f7292edb2c4bad")
 
-# Don't forget to close the client when you're done
-client.close()
+    try:
+        swaps = client.get_swaps(
+            chain="ethereum",
+            token1="USDC",
+            token2="WETH",
+            size_bucket="all",
+            page_size=5
+        )
+
+        print(str(len(swaps["swaps"])) + " swaps found")
+        for e in swaps["swaps"]:
+            print(e["token1_symbol"])
+            print(e["token2_symbol"])
+            print(e["token1_amount"])
+            print(e["token2_amount"])
+
+    finally:
+        # Close the client
+        client.close()
+
 ```
 
 ### Core API Methods
