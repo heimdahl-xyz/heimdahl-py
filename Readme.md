@@ -40,13 +40,13 @@ import os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
-from client import Index
+from client import HeimdahlClient
 
 
 # Example usage
 if __name__ == "__main__":
     # Initialize the client with your API key
-    client = Index(api_key="pk_dc07ea43afeb807362e9b67201e6d07054f7292edb2c4bad")
+    client = HeimdahlClient(api_key="pk_dc07ea43afeb807362e9b67201e6d07054f7292edb2c4bad")
 
     try:
         swaps = client.get_swaps(
